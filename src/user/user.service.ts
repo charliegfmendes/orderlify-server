@@ -45,4 +45,14 @@ export class UserService {
     const { password: _, ...userWithoutPassword } = user;
     return userWithoutPassword;
   }
+
+  async findById(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    
+    return user;
+  }
 }
